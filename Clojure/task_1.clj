@@ -32,10 +32,11 @@
 
 (ns task-1)
 ;; Задание 1.2 (хвостовая рекурсия)
+;; не переполняет стек, выполняется быстрее
 (defn generate-strings-tail
   "Та же функция, но с хвостовой рекурсией"
   [chars n]
-  (letfn [(generate [current-str remaining-len acc]
+  (letfn [(generate [current-str remaining-len acc] 
             (if (zero? remaining-len)
               (conj acc current-str) ;; аккумулятор для сбора результатов
               (reduce
@@ -65,17 +66,17 @@
 (ns task-1)
 
 ;; my-map: применяет функцию f к каждому элементу списка
-(defn my-map
-  [f coll]
-  (reduce
-   (fn [acc item]
+(defn my-map ;; «разметка», те хотим применять ф-ю ко всем элементам
+  [f coll] ;; на вход ф-я и коллекция (параметры)
+  (reduce ;; применяет ф-ю из аргумента ко всем эл. кол.
+   (fn [acc item] ;; храним промежут результаты
      (concat acc [(f item)])) ; добавляем результат применения функции f к текущему элементу
    [] ; начальное значение - пустой вектор
    coll))
 
 ;; my-filter: оставляет только элементы, удовлетворяющие предикату pred
 (defn my-filter
-  [pred coll]
+  [pred coll] ;; pred - это ф-я предикат (bool) 
   (reduce
    (fn [acc item]
      (if (pred item)
