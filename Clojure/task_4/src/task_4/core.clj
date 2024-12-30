@@ -1,21 +1,21 @@
 ;; Задание 4
-(ns task-4
+(ns core
   (:require [clojure.test :refer :all]))
 
 ;; 1. Сначала определяем протокол
-(defprotocol BooleanExpression
-  (evaluate [this vars])
-  (to-dnf [this])
-  (substitute [this var value]))
+(defprotocol BooleanExpression ;; for bool 
+  (evaluate [this vars]) ;; оценка логич выражения на основе входных переменных
+  (to-dnf [this]) ;; преобразвоание в ДНФ (дизъюнк. норм. форму) И / ИЛИ
+  (substitute [this var value])) ;; возвращает новое логич выражение (преобразованное)
 
 ;; 2. Затем определяем все records с реализацией протокола
-(defrecord Constant [value]
+(defrecord Constant [value] ;; новый тип данных «константа» 
   BooleanExpression
   (evaluate [_ _] value)
   (to-dnf [this] this)
   (substitute [this _ _] this))
 
-(defrecord Variable [name]
+(defrecord Variable [name]  ;; новый тип данных «переменная» 
   BooleanExpression
   (evaluate [_ vars] (get vars name))
   (to-dnf [this] this)
@@ -24,7 +24,7 @@
       (->Constant value)
       this)))
 
-(defrecord Not [expr]
+(defrecord Not [expr]  ;; новый тип данных «НЕ»  ++ двойное отрицания, ноль -- что тогда?? ЛЮБОЕ лог выражение (закон деморгана)
   BooleanExpression
   (evaluate [_ vars] (not (evaluate expr vars)))
   (to-dnf [_]
@@ -35,7 +35,7 @@
   (substitute [_ var value]
     (->Not (substitute expr var value))))
 
-(defrecord And [left right]
+(defrecord And [left right]  ;; новый тип данных «И»
   BooleanExpression
   (evaluate [_ vars]
     (and (evaluate left vars) (evaluate right vars)))
@@ -49,7 +49,7 @@
     (->And (substitute left var value)
            (substitute right var value))))
 
-(defrecord Or [left right]
+(defrecord Or [left right] ;; новый тип данных «ИЛИ»
   BooleanExpression
   (evaluate [_ vars]
     (or (evaluate left vars) (evaluate right vars)))
@@ -63,7 +63,7 @@
     (->Or (substitute left var value)
           (substitute right var value))))
 
-(defrecord Implies [left right]
+(defrecord Implies [left right] ;; новый тип данных «если L то R» 
   BooleanExpression
   (evaluate [_ vars]
     (or (not (evaluate left vars)) (evaluate right vars)))
@@ -96,5 +96,3 @@
   ;; Подстановка
   (substitute example :p true))
 
-;; Запуск тестов
-(run-tests)

@@ -20,29 +20,25 @@
 ;; Пример использования
 ;; clj
 ;; (load-file "/Users/alexpti4ka/Documents/Cursor_projects/Clojure/task_1.clj")
-;; (task-1/generate-strings [\a \b \c] 2)
-
 ;; (ns task-1)  – переключение на верный namespace
-;; (def result (generate-strings [\a \b \c] 2)) 
-;; генерируем строки длины 2 из символов 'a', 'b', 'c'
-;; (println "Result:" result) ;; выводим результат
+
+;; (task-1/generate-strings [\a \b \c] 2)
 
 ;; для выхода из ошибки Ctrl + D
 
 
-(ns task-1)
 ;; Задание 1.2 (хвостовая рекурсия)
-;; не переполняет стек, выполняется быстрее
+;; не переполняет стек, выполняется быстрее,тк хранит промежуточные результаты и их не надо пересчитывать
 (defn generate-strings-tail
   "Та же функция, но с хвостовой рекурсией"
   [chars n]
-  (letfn [(generate [current-str remaining-len acc] 
+  (letfn [(generate [current-str remaining-len acc]  
             (if (zero? remaining-len)
               (conj acc current-str) ;; аккумулятор для сбора результатов
-              (reduce
+              (reduce ;; применяет ф-ю ко всем эл. кол. + накапливает результат
                (fn [new-acc c]
-                 (if (not= c (last current-str))
-                   (generate (str current-str c)
+                 (if (not= c (last current-str)) ;;проверка на последний элемент
+                   (generate (str current-str c) ;; вместо вызова сделать recur
                              (dec remaining-len)
                              new-acc) 
                    new-acc))
@@ -50,20 +46,16 @@
                chars)))]
     (generate "" n #{}))) ;; Результаты собираются в множество (#{}) вместо списка
 
-;; Для проверки может понадобится еще раз перегрузить файл и обозначить пространство имен
-;; Перезагрузим файл
+;; После обновления кода может понадобится еще раз перегрузить файл и обозначить пространство имен
 ;;(load-file "/Users/alexpti4ka/Documents/Cursor_projects/Clojure/task_1.clj")
-
-;; Переключимся в пространство имен
 ;;(ns task-1)
 
-;; Для сравнения результатов
-;;(= (set (generate-strings [\a \b \c] 2))
-;;   (generate-strings-tail [\a \b \c] 2))
+;; Для сравнения результатов 1 и 2 ф-и (bool)
+(= (set (generate-strings [\a \b \c] 2))
+   (generate-strings-tail [\a \b \c] 2))
 
 
 ;; Задание 1.3 — reduce и базовые операции над списками (cons, first, concat)
-(ns task-1)
 
 ;; my-map: применяет функцию f к каждому элементу списка
 (defn my-map ;; «разметка», те хотим применять ф-ю ко всем элементам
@@ -86,12 +78,10 @@
    coll))
 
 ;; Примеры использования:
-;; (my-map inc [1 2 3 4 5])  ; => [2 3 4 5 6]
-;; (my-filter even? [1 2 3 4 5])  ; => [2 4]
+;; (my-map inc [1 2 3 4 5])  ; => [2 3 4 5 6] — применяет +1 (inc) ко всем
+;; (my-filter even? [1 2 3 4 5])  ; => [2 4] — фильтрует только четные (even)
 
 ;; Задание 1.4 — операции над последовательностями + map/reduce/filter
-(ns task-1)
-
 
 (defn generate-strings-functional 
     "Возвращает список всех строк длины n, состоящих из заданных символов 

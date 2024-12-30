@@ -1,8 +1,9 @@
 .zshrc
 Cursor_projects.code-workspace
 db.transit.json
-/.lsp/
-/.clj-kondo/
+.lsp/
+.clj-kondo/
 db.transit.json
-/ML/
-.DS_Store
+ML/
+.DS_Storegit 
+.json
