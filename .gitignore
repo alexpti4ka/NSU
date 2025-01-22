@@ -4,6 +4,6 @@ db.transit.json
 .lsp/
 .clj-kondo/
 db.transit.json
-ML/
 .DS_Storegit 
 .json
+__pycache__

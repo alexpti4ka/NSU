@@ -1,0 +1,4 @@
+file_type: pdf
+page_count: 10
+status: raw_data
+header_extractor: false
