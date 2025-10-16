@@ -1,0 +1,9 @@
+.zshrc
+Cursor_projects.code-workspace
+db.transit.json
+.lsp/
+.clj-kondo/
+db.transit.json
+.DS_Storegit 
+.json
+__pycache__

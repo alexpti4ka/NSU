@@ -1,0 +1,9 @@
+[submodule "Clojure"]
+	path = Clojure
+	url = https://github.com/alexpti4ka/nsu-clojure.git
+[submodule "Programming"]
+	path = Programming
+	url = https://github.com/alexpti4ka/nsu-programming/
+[submodule "GPU"]
+	path = GPU
+	url = https://github.com/alexpti4ka/nsu-gpu.git
