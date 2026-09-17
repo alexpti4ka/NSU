@@ -7,3 +7,6 @@
 [submodule "GPU"]
 	path = GPU
 	url = https://github.com/alexpti4ka/nsu-gpu.git
+[submodule "OS_DevTools"]
+	path = OS_DevTools
+	url = https://github.com/alexpti4ka/nsu-os-devtools.git
